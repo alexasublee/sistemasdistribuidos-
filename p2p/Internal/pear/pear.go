@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"net"
+	"os"
 )
 
 var username string
@@ -23,8 +24,7 @@ func StartListening(port string, user string) {
 			fmt.Println("Error accepting connections:", err.Error())
 			continue
 		}
-		go receiveMessage(conn)
-		sendMessage(conn)
+		go handleConnection(conn)
 	}
 }
 
@@ -37,24 +37,44 @@ func ConnectToPeer(address string, user string) {
 	}
 	defer conn.Close()
 
+	go handleConnection(conn)
+	select {}
+}
+
+func handleConnection(conn net.Conn) {
+	defer conn.Close()
 	go receiveMessage(conn)
 	sendMessage(conn)
+
 }
 
 func receiveMessage(conn net.Conn) {
-	defer conn.Close()
 	reader := bufio.NewReader(conn)
-	message, _ := reader.ReadString('\n')
-	fmt.Print(message)
+	for {
+		message, err := reader.ReadString('\n')
+		if err != nil {
+			fmt.Println("Connection closed")
+			return
+		}
+		fmt.Print(message)
+	}
+
 }
 
 func sendMessage(conn net.Conn) {
 	writer := bufio.NewWriter(conn)
-	fmt.Println("Connected to peer. Typer your message: ")
-	message := "this is the first message :)"
-	_, err := writer.WriteString(message)
-	if err != nil {
-		fmt.Println("Error sending message: ", err.Error())
+	scanner := bufio.NewScanner(os.Stdin)
+	for {
+		fmt.Print("Enter message: ")
+		if !scanner.Scan() {
+			return
+		}
+		message := scanner.Text() + "\n"
+		_, err := writer.WriteString(username + ": " + message)
+		if err != nil {
+			fmt.Println("Error sending message: ", err.Error())
+			return
+		}
+		writer.Flush()
 	}
-	writer.Flush()
 }
