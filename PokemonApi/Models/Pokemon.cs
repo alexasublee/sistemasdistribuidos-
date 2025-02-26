@@ -10,4 +10,8 @@ public class Pokemon{
     public String Type{get; set;}
     public int Level {get; set;}
     public Stats Stats{get; set;}
+
+    public String Gender{get; set;}
+
+
 }

@@ -15,9 +15,12 @@ public class CreatePokemonDto{
     [DataMember(Name ="Level", Order =3)]
 
     public int Level {get; set;}
-    [DataMember(Name ="Weakness", Order =4)]
+    [DataMember(Name ="Gender", Order =4)]
 
 
+
+    public string Gender {get; set;}
+    [DataMember(Name ="Stats", Order =5)]
 
     public StatsDto Stats {get; set;}
 
