@@ -8,7 +8,7 @@ using SoapCore;
 var Builder = WebApplication.CreateBuilder(args);
 Builder.Services.AddSoapCore();
 
-Builder.Services.AddSingleton<IPokemonService, PokemonService>();
+Builder.Services.AddScoped<IPokemonService, PokemonService>();
 Builder.Services.AddScoped<IPokemonRepository ,PokemonRepository>();
 
 
