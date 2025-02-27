@@ -7,6 +7,7 @@ namespace PokemonApi.Infrastructure;
 public class RelationalDbContext : DbContext
 {
     public DbSet<PokemonEntity> Pokemons {get; set;}
+    public DbSet<HobbyEntity> Hobbies {get; set;}
     public RelationalDbContext(DbContextOptions<RelationalDbContext> options) : base(options){
 
     }
@@ -24,6 +25,13 @@ public class RelationalDbContext : DbContext
             entity.Property(s=> s.Defense).IsRequired();
             entity.Property(s=> s.Speed).IsRequired();
             entity.Property(s=> s.Gender).IsRequired();
+        });
+
+        modelBuilder.Entity<HobbyEntity>(entity =>{
+            entity.HasKey(s => s.Id);
+            entity.Property(s => s.Name).IsRequired().HasMaxLength(110);
+            entity.Property(s=> s.Top).IsRequired();
+
         });
     }
 
