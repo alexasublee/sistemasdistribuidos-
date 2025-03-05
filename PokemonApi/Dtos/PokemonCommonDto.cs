@@ -1,12 +1,13 @@
 using System.Runtime.Serialization;
-using Microsoft.AspNetCore.SignalR;
-using Microsoft.Net.Http.Headers;
 
 namespace PokemonApi.Dtos;
 
-[DataContract(Name = "CreatePokemonDto", Namespace ="http://pokemon-api/pokemon-service")]
-public class CreatePokemonDto{
+[DataContract(Name = "PokemonCommonDto", Namespace = "http://pokemon.api/pokemon-s")]
+[KnownType(typeof(CreatePokemonDto))]
+[KnownType(typeof(UpdatePokemonDto))]
 
+public class PokemonCommonDto{
+    
     [DataMember(Name ="Name", Order =1)]
     public string Name {get; set;}
     [DataMember(Name ="Type", Order =2)]
@@ -24,4 +25,6 @@ public class CreatePokemonDto{
 
     public StatsDto Stats {get; set;}
 
-    }
+
+
+}

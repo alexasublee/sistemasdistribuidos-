@@ -11,9 +11,12 @@ public static class PokemonMapper{
             Id= pokemon.Id,
             Name = pokemon.Name,
             Type = pokemon.Type,
-            Level = pokemon.Level, 
+            Level = pokemon.Level,
+            Gender = pokemon.Gender, 
             Attack = pokemon.Stats.Attack,
             Defense = pokemon.Stats.Defense,
+            
+
             Speed = pokemon.Stats.Speed
         };
     }
@@ -26,6 +29,7 @@ public static class PokemonMapper{
             Name = entity.Name,
             Type = entity.Type,
             Level = entity.Level, 
+            Gender = entity.Gender,
             Stats = new Stats{
                 Attack = entity.Attack,
                 Defense = entity.Defense,
@@ -41,13 +45,34 @@ public static class PokemonMapper{
             Id = pokemon.Id,
             Name = pokemon.Name,
             Type = pokemon.Type,
-            Level = pokemon.Level, 
+            Level = pokemon.Level,
+            Gender = pokemon.Gender,
+ 
             Stats = new StatsDto{
                 Attack = pokemon.Stats.Attack,
                 Speed = pokemon.Stats.Speed,
                 Defense = pokemon.Stats.Defense
                 
             }
+        };
+    }
+
+  public static Pokemon ToModel(this CreatePokemonDto pokemon){
+        return new Pokemon{
+            Id = Guid.NewGuid(),
+            Name = pokemon.Name,
+            Type = pokemon.Type,
+            Level = pokemon.Level,
+            Gender = pokemon.Gender,
+            Stats = pokemon.Stats.ToModel()
+        };
+    }
+
+    public static Stats ToModel(this StatsDto stats){
+        return new Stats{
+            Attack = stats.Attack,
+            Defense = stats.Defense,
+            Speed = stats.Speed
         };
     }
     

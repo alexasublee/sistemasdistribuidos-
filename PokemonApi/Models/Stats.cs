@@ -5,4 +5,5 @@ public class Stats {
      public int Defense {get; set;}
      
      public int Speed {get; set;}
+    
 }
