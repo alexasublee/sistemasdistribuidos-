@@ -12,6 +12,10 @@ Builder.Services.AddScoped<IPokemonService, PokemonService>();
 Builder.Services.AddScoped<IPokemonRepository ,PokemonRepository>();
 Builder.Services.AddScoped<IHobbiesService , HobbiesService>();
 Builder.Services.AddScoped<IHobbiesRepository ,HobbiesRepository>();
+Builder.Services.AddScoped<IBookService, BookService>();
+Builder.Services.AddScoped<IBookRepository ,BookRepository>();
+
+
 
 
 Builder.Services.AddDbContext<RelationalDbContext>(options => options.UseMySql(Builder.Configuration.GetConnectionString("DefaultConnection"), 
@@ -24,7 +28,7 @@ var app = Builder.Build();
 
 app.UseSoapEndpoint<IPokemonService>("/pokemonService.svc",new SoapEncoderOptions());
 app.UseSoapEndpoint<IHobbiesService>("/RoblesAlexaHobbiesService.svc",new SoapEncoderOptions());
-app.UseSoapEndpoint<IBookService>("/BookService.svc..svc",new SoapEncoderOptions());
+app.UseSoapEndpoint<IBookService>("/BookService.svc",new SoapEncoderOptions());
 
 
 
