@@ -6,8 +6,14 @@ namespace PokemonApi.Infrastructure;
 
 public class RelationalDbContext : DbContext
 {
+
     public DbSet<PokemonEntity> Pokemons {get; set;}
     public DbSet<HobbyEntity> Hobbies {get; set;}
+
+    public DbSet<BookEntity> Book {get; set;}
+
+
+
     public RelationalDbContext(DbContextOptions<RelationalDbContext> options) : base(options){
 
     }
@@ -33,6 +39,21 @@ public class RelationalDbContext : DbContext
             entity.Property(s=> s.Top).IsRequired();
 
         });
+
+
+
+        modelBuilder.Entity<BookEntity>(entity =>{
+            entity.HasKey(s => s.Id);
+            entity.Property(s => s.Title).IsRequired().HasMaxLength(110);
+            entity.Property(s=> s.Author).IsRequired();
+            entity.Property(s => s.PublishedDate).IsRequired();
+
+        });
+
+
+
+
+
     }
 
 }
