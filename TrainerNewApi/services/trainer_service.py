@@ -27,3 +27,14 @@ class TrainerService(trainer_pb2_grpc.TrainerServiceServicer):
             succcess_count=len(trainers),
             trainers=trainers
         )
+
+    def GetTrainersByName(self, request, context):
+        if len(request.name) <= 1:
+            context.set_code(grpc.StatusCode.INVALID_ARGUMENT)
+            context.set_details("Name must be at least 2 characters long")
+            return
+
+        trainers = self.repository.get_by_name(request.name)
+
+        for trainer in trainers:
+            yield to_proto_from_model(trainer)
